@@ -8,6 +8,7 @@ package excelreadwritetest;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Scanner;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -24,10 +25,10 @@ public class ExcelReadWriteTest {
     private static Sheet sh;
     private static FileInputStream fis;
     private static double[][] TSum = new double[21][51];
-    private static int N = 300;
+    private static int N;
     private static double[] Genuine;
     private static double[] Impostor;
-    private static double T=0.05;
+    private static double T;
     
 
     /**
@@ -35,9 +36,16 @@ public class ExcelReadWriteTest {
      */
     public static void main(String[] args) throws Exception {
         initial();
+        
+        Scanner sc=new Scanner(System.in);
+        
+        System.out.println("Please input the N(the number of samples to be used for building the template):" );
+        N=sc.nextInt();
+        System.out.println("Please input the T(the verification threshold): ");
+        T=sc.nextDouble();
+        
         Genuine = new double[(400 - N) * 51]; 
         Impostor = new double[(400 - N) * 50 * 51];
-
         int countGenuine = 0;
         //i indicates the user, i=0 means the first user.
         for (int i = 0; i < 51; i++) {
@@ -121,7 +129,7 @@ public class ExcelReadWriteTest {
         System.out.println("MinImpostorScore "+findMinImpostorScore());
 //        displayMean();
 //        displayGenuine();
-//        displayImposter();
+//        displayImpostor();
     }
     
     //Read the dataset
